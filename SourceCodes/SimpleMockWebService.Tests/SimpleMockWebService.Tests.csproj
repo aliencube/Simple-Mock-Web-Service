@@ -78,6 +78,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Responses\delete.content.id.json" />
+    <None Include="Responses\put.content.id.json" />
+    <None Include="Responses\post.content.json" />
+    <None Include="Responses\get.content.id.json" />
+    <None Include="Responses\get.contents.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleMockWebService.Configurations\SimpleMockWebService.Configurations.csproj">
@@ -89,6 +94,7 @@
       <Name>SimpleMockWebService.Services</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
