@@ -36,6 +36,17 @@ namespace SimpleMockWebService.Tests
         /// Tests to get the list of api keys from the configuration settings.
         /// </summary>
         [Test]
+        [TestCase("api")]
+        public void GetGlobalSettings_SendConfigurationSettings_GlobalSettingsReturned(string prefix)
+        {
+            var result = this._settings.GlobalSettings.WebApiPrefix;
+            Assert.AreEqual(prefix, result);
+        }
+
+        /// <summary>
+        /// Tests to get the list of api keys from the configuration settings.
+        /// </summary>
+        [Test]
         public void GetListsOfApis_SendConfigurationSettings_ListOfApisReturned()
         {
             var keys = this._settings

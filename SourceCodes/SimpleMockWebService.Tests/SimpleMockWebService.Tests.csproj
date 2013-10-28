@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationTest.cs" />
+    <Compile Include="MockServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +76,10 @@
     <ProjectReference Include="..\SimpleMockWebService.Configurations\SimpleMockWebService.Configurations.csproj">
       <Project>{5dbf76fa-d20f-4ce2-848e-bf7ac43fbf8e}</Project>
       <Name>SimpleMockWebService.Configurations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleMockWebService.Services\SimpleMockWebService.Services.csproj">
+      <Project>{44f39b6a-e53f-4cbd-b63f-19828e04d2e0}</Project>
+      <Name>SimpleMockWebService.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

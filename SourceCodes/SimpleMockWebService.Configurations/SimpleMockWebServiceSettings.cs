@@ -11,6 +11,16 @@ namespace SimpleMockWebService.Configurations
         #region Properties
 
         /// <summary>
+        /// Gets or sets the global settings element.
+        /// </summary>
+        [ConfigurationProperty("globalSettings", IsRequired = true)]
+        public GlobalSettingsElement GlobalSettings
+        {
+            get { return (GlobalSettingsElement)this["globalSettings"]; }
+            set { this["globalSettings"] = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the collection of API element groups.
         /// </summary>
         [ConfigurationProperty("apiGroups", IsRequired = true)]

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5DBF76FA-D20F-4CE2-848E-BF7AC43FBF8E}</ProjectGuid>
+    <ProjectGuid>{44F39B6A-E53F-4CBD-B63F-19828E04D2E0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleMockWebService.Configurations</RootNamespace>
-    <AssemblyName>SimpleMockWebService.Configurations</AssemblyName>
+    <RootNamespace>SimpleMockWebService.Services</RootNamespace>
+    <AssemblyName>SimpleMockWebService.Services</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,19 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiElementCollection.cs" />
-    <Compile Include="ApiElement.cs" />
-    <Compile Include="ApiGroupElementCollection.cs" />
-    <Compile Include="ApiGroupElement.cs" />
-    <Compile Include="GlobalSettingsElement.cs" />
-    <Compile Include="Interfaces\ISimpleMockWebServiceSettings.cs" />
-    <Compile Include="SimpleMockWebServiceSettings.cs" />
+    <Compile Include="Interfaces\IMockService.cs" />
+    <Compile Include="MockService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <ProjectReference Include="..\SimpleMockWebService.Configurations\SimpleMockWebService.Configurations.csproj">
+      <Project>{5dbf76fa-d20f-4ce2-848e-bf7ac43fbf8e}</Project>
+      <Name>SimpleMockWebService.Configurations</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
