@@ -105,6 +105,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SimpleMockWebService.Configurations\SimpleMockWebService.Configurations.csproj">
+      <Project>{5dbf76fa-d20f-4ce2-848e-bf7ac43fbf8e}</Project>
+      <Name>SimpleMockWebService.Configurations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleMockWebService.Web.API\SimpleMockWebService.Web.API.csproj">
       <Project>{A49A9472-5618-4420-BA65-3ADF0A263D4E}</Project>
       <Name>SimpleMockWebService.Web.API</Name>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using SimpleMockWebService.Configurations.Interfaces;
 using System.Net.Http;
 using System.Web.Http;
 
@@ -13,7 +10,23 @@ namespace SimpleMockWebService.Web.API.Controllers
     public class ServiceController : ApiController
     {
         #region Constructors
-        #endregion
+
+        /// <summary>
+        /// Initialises a new instance of the ServiceController class.
+        /// </summary>
+        /// <param name="settings">Configuration settings instance.</param>
+        public ServiceController(ISimpleMockWebServiceSettings settings)
+        {
+            this._settings = settings;
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        private readonly ISimpleMockWebServiceSettings _settings;
+
+        #endregion Properties
 
         #region Methods
 
@@ -49,6 +62,7 @@ namespace SimpleMockWebService.Web.API.Controllers
         public void Delete(int id)
         {
         }
-        #endregion
+
+        #endregion Methods
     }
 }
