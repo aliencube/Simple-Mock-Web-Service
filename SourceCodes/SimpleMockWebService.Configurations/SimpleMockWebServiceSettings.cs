@@ -11,15 +11,27 @@ namespace SimpleMockWebService.Configurations
         #region Properties
 
         /// <summary>
-        /// Gets or sets the collection of API elements.
+        /// Gets or sets the collection of API element groups.
         /// </summary>
-        [ConfigurationProperty("apis", IsRequired = true)]
-        public ApiCollection Apis
+        [ConfigurationProperty("apiGroups", IsRequired = true)]
+        public ApiGroupElementCollection ApiGroups
         {
-            get { return (ApiCollection)this["apis"]; }
-            set { this["apis"] = value; }
+            get { return (ApiGroupElementCollection)this["apiGroups"]; }
+            set { this["apiGroups"] = value; }
         }
 
         #endregion Properties
+
+        #region Methods
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing,
+        /// or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+        }
+
+        #endregion Methods
     }
 }

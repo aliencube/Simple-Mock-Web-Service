@@ -21,6 +21,7 @@ namespace SimpleMockWebService.Configurations
 
         /// <summary>
         /// Gets or sets the method verb for the RESTful request.
+        /// Default method is <c>GET</c>, if not specified.
         /// </summary>
         [ConfigurationProperty("method", DefaultValue = "GET", IsRequired = false)]
         public string Method
@@ -41,6 +42,7 @@ namespace SimpleMockWebService.Configurations
 
         /// <summary>
         /// Gets or sets the physical path to return the JSON result as RESTful response.
+        /// Default location of the response sources is <c>~/Resources</c>, unless the directory is explicitly specified.
         /// </summary>
         [ConfigurationProperty("src", IsRequired = true)]
         public string Src

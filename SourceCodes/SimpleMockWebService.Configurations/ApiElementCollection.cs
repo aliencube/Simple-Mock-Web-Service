@@ -5,7 +5,7 @@ namespace SimpleMockWebService.Configurations
     /// <summary>
     /// This represents the entity containing the collection of API elements.
     /// </summary>
-    public class ApiCollection : ConfigurationElementCollection
+    public class ApiElementCollection : ConfigurationElementCollection
     {
         #region Properties
 

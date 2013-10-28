@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiCollection.cs" />
+    <Compile Include="ApiElementCollection.cs" />
     <Compile Include="ApiElement.cs" />
+    <Compile Include="ApiGroupElementCollection.cs" />
+    <Compile Include="ApiGroupElement.cs" />
     <Compile Include="Interfaces\ISimpleMockWebServiceSettings.cs" />
     <Compile Include="SimpleMockWebServiceSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

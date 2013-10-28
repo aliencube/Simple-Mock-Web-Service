@@ -1,13 +1,15 @@
-﻿namespace SimpleMockWebService.Configurations.Interfaces
+﻿using System;
+
+namespace SimpleMockWebService.Configurations.Interfaces
 {
     /// <summary>
     /// This provides interfaces to the SimpleMockWebServiceSettings class.
     /// </summary>
-    public interface ISimpleMockWebServiceSettings
+    public interface ISimpleMockWebServiceSettings : IDisposable
     {
         /// <summary>
-        /// Gets or sets the collection of API elements.
+        /// Gets or sets the collection of API element groups.
         /// </summary>
-        ApiCollection Apis { get; set; }
+        ApiGroupElementCollection ApiGroups { get; set; }
     }
 }
