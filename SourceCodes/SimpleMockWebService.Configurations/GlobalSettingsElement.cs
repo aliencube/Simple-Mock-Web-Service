@@ -26,6 +26,17 @@ namespace SimpleMockWebService.Configurations
             set { this["webApiPrefix"] = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the list of method verbs for RESTful web service delimited with comma.
+        /// Default value is <c>GET,POST,PUT,DELETE</c>.
+        /// </summary>
+        [ConfigurationProperty("verbs", DefaultValue = "GET,POST,PUT,DELETE", IsRequired = false)]
+        public string Verbs
+        {
+            get { return (string) this["verbs"]; }
+            set { this["verbs"] = value; }
+        }
+
         #endregion Properties
     }
 }

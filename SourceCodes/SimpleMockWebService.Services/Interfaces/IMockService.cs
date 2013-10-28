@@ -1,19 +1,12 @@
 ﻿using SimpleMockWebService.Configurations;
 using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 
 namespace SimpleMockWebService.Services.Interfaces
 {
     public interface IMockService : IDisposable
     {
         #region Methods
-
-        /// <summary>
-        /// Gets the mocking response from the preset value.
-        /// </summary>
-        /// <param name="nvc">NameValueCollection instance that represents querystrings.</param>
-        /// <returns>Returns the mocking response from the preset value.</returns>
-        string GetResponse(NameValueCollection nvc);
 
         /// <summary>
         /// Checks whether the given URL starts with the valid prefix or not.
@@ -23,25 +16,32 @@ namespace SimpleMockWebService.Services.Interfaces
         bool IsValidPrefix(string url);
 
         /// <summary>
-        /// Gets the Web API controller name from the URL provided.
+        /// Checks whether the given method verb is valid or not.
         /// </summary>
-        /// <param name="url">URL to get the Web API controller name.</param>
-        /// <returns>Returns the Web API controller name.</returns>
-        string GetApiController(string url);
-
-        /// <summary>
-        /// Gets the Web API Group element based on the URL provided.
-        /// </summary>
-        /// <param name="url">URL to get the Web API Group element.</param>
-        /// <returns>Returns the Web API Group element.</returns>
-        ApiGroupElement GetApiGroupElement(string url);
+        /// <param name="method">Method verb to be validated.</param>
+        /// <returns>Returns <c>True</c>, if the given method verb is valid; otherwise returns <c>False</c>.</returns>
+        bool IsValidMethod(string method);
 
         /// <summary>
         /// Gets the Web API element based on the URL provided.
         /// </summary>
+        /// <param name="method">Method verb to get the Web API element.</param>
         /// <param name="url">URL to get the Web API element.</param>
         /// <returns>Returns the Web API element.</returns>
-        ApiElement GetApiElement(string url);
+        ApiElement GetApiElement(string method, string url);
+
+        /// <summary>
+        /// Gets the mocking response from the preset value.
+        /// </summary>
+        /// <param name="items">List of items to fetch response.</param>
+        /// <returns>
+        /// Returns either:
+        ///     <list type="bullet">
+        ///         <item>The mocking response from the preset value, or</item>
+        ///         <item><c>null</c>, if the input items don't have URL or method verb, or invalid URL or method verb.</item>
+        ///     </list>
+        /// </returns>
+        string GetResponse(IDictionary<string, string> items);
 
         #endregion Methods
     }
