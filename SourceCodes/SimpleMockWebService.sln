@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BEFD69
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMockWebService.Configurations", "SimpleMockWebService.Configurations\SimpleMockWebService.Configurations.csproj", "{5DBF76FA-D20F-4CE2-848E-BF7AC43FBF8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMockWebService.Web.API", "SimpleMockWebService.Web.API\SimpleMockWebService.Web.API.csproj", "{A49A9472-5618-4420-BA65-3ADF0A263D4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMockWebService.Web.API.Tests", "SimpleMockWebService.Web.API.Tests\SimpleMockWebService.Web.API.Tests.csproj", "{88F1AFD2-6359-4914-AB6C-68EC022C0F77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +28,14 @@ Global
 		{5DBF76FA-D20F-4CE2-848E-BF7AC43FBF8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DBF76FA-D20F-4CE2-848E-BF7AC43FBF8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DBF76FA-D20F-4CE2-848E-BF7AC43FBF8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A49A9472-5618-4420-BA65-3ADF0A263D4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A49A9472-5618-4420-BA65-3ADF0A263D4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A49A9472-5618-4420-BA65-3ADF0A263D4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A49A9472-5618-4420-BA65-3ADF0A263D4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88F1AFD2-6359-4914-AB6C-68EC022C0F77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88F1AFD2-6359-4914-AB6C-68EC022C0F77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88F1AFD2-6359-4914-AB6C-68EC022C0F77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88F1AFD2-6359-4914-AB6C-68EC022C0F77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
