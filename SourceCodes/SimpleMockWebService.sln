@@ -16,6 +16,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMockWebService.Web.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMockWebService.Services", "SimpleMockWebService.Services\SimpleMockWebService.Services.csproj", "{44F39B6A-E53F-4CBD-B63F-19828E04D2E0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{B1E0F5E1-E904-4E0E-806D-F182B27D6BAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", "{280776DE-FA96-4C86-BB0A-02D52CE4CA43}"
+	ProjectSection(SolutionItems) = preProject
+		..\Documents\Properties\CommonAssemblyInfo.cs = ..\Documents\Properties\CommonAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{09B3C701-9756-4A93-A88E-2A8EF90C59B0}"
+	ProjectSection(SolutionItems) = preProject
+		..\Documents\Configurations\SimpleMockWebService.config = ..\Documents\Configurations\SimpleMockWebService.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,5 +57,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{280776DE-FA96-4C86-BB0A-02D52CE4CA43} = {B1E0F5E1-E904-4E0E-806D-F182B27D6BAE}
+		{09B3C701-9756-4A93-A88E-2A8EF90C59B0} = {B1E0F5E1-E904-4E0E-806D-F182B27D6BAE}
 	EndGlobalSection
 EndGlobal
