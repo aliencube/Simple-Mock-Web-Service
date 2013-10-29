@@ -1,12 +1,12 @@
-﻿using System.IO;
-using System.Text;
-using System.Web.Hosting;
-using SimpleMockWebService.Configurations;
+﻿using SimpleMockWebService.Configurations;
 using SimpleMockWebService.Configurations.Interfaces;
 using SimpleMockWebService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web.Hosting;
 
 namespace SimpleMockWebService.Services
 {
@@ -32,6 +32,21 @@ namespace SimpleMockWebService.Services
 
         private readonly ISimpleMockWebServiceSettings _settings;
 
+        private Regex _regexPrefix;
+
+        /// <summary>
+        /// Gets the regular expression instance to check Web API prefix.
+        /// </summary>
+        public Regex RegexPrefix
+        {
+            get
+            {
+                if (this._regexPrefix == null)
+                    this._regexPrefix = new Regex(@"^~?/(.*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                return this._regexPrefix;
+            }
+        }
+
         #endregion Properties
 
         #region Methods
@@ -46,8 +61,8 @@ namespace SimpleMockWebService.Services
             if (String.IsNullOrWhiteSpace(url))
                 return false;
 
-            var validated = url.Replace("~/", "").ToLower()
-                               .StartsWith(this._settings.GlobalSettings.WebApiPrefix.ToLower());
+            url = this.RegexPrefix.Replace(url, "$1").ToLower();
+            var validated = url.StartsWith(this._settings.GlobalSettings.WebApiPrefix.ToLower());
             return validated;
         }
 
@@ -83,9 +98,9 @@ namespace SimpleMockWebService.Services
             var validated = this._settings
                                 .GlobalSettings
                                 .JsonFileExtensions
-                                .Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries)
+                                .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                                 .Select(p => p.ToLower())
-                                .Contains(src.Split(new[] {"."}, StringSplitOptions.RemoveEmptyEntries).Last());
+                                .Contains(src.Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries).Last());
             return validated;
         }
 
@@ -106,11 +121,16 @@ namespace SimpleMockWebService.Services
             return api;
         }
 
+        /// <summary>
+        /// Gets the list of segments from the URL, delimited with <c>/</c>.
+        /// </summary>
+        /// <param name="url">URL to get segments.</param>
+        /// <returns>Returns the list of URL segments.</returns>
         public IList<string> GetApiUrlSegments(string url)
         {
             var segments = url.Replace("~/", "")
                               .Replace(this._settings.GlobalSettings.WebApiPrefix + "/", "")
-                              .Split(new[] {"/"}, StringSplitOptions.RemoveEmptyEntries);
+                              .Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
             return segments;
         }
 
@@ -125,6 +145,11 @@ namespace SimpleMockWebService.Services
             return controller;
         }
 
+        /// <summary>
+        /// Gets the list of parameters from the URL provided.
+        /// </summary>
+        /// <param name="url">URL to get parameters.</param>
+        /// <returns>Returns the list of parameters.</returns>
         public IList<string> GetApiParameters(string url)
         {
             var segments = this.GetApiUrlSegments(url);
@@ -135,26 +160,61 @@ namespace SimpleMockWebService.Services
             return parameters;
         }
 
+        /// <summary>
+        /// Gets the default response file path.
+        /// </summary>
+        /// <param name="api">ApiElement instance.</param>
+        /// <returns>Returns the default response file path.</returns>
+        public string GetDefaultApiResponseFilePath(ApiElement api)
+        {
+            return this.GetDefaultApiResponseFilePath(api.Method, api.Url);
+        }
+
+        /// <summary>
+        /// Gets the default response file path.
+        /// </summary>
+        /// <param name="method">Method verb to get the response.</param>
+        /// <param name="url">URL to get the response.</param>
+        /// <returns>Returns the default response file path.</returns>
         public string GetDefaultApiResponseFilePath(string method, string url)
         {
             var controller = this.GetApiController(url);
             var parameters = this.GetApiParameters(url);
 
-            var filepath = String.Format("~/responses/{0}.{1}.{2}.json",
+            var filepath = String.Format("~/Responses/{0}.{1}.{2}.json",
                                          method.ToLower(),
                                          controller.ToLower(),
                                          String.Join(".", parameters));
             return filepath;
         }
 
-        public string GetApiResponse(string src)
+        /// <summary>
+        /// Gets the full qualified response file path.
+        /// </summary>
+        /// <param name="api">ApiElement instance.</param>
+        /// <returns>Returns the full qualified response file path.</returns>
+        public string GetApiReponseFullPath(ApiElement api)
         {
+            var src = api.Src;
+            if (!this.HasValidJsonFileExtension(src))
+                src = this.GetDefaultApiResponseFilePath(api);
+
             var fullpath = HostingEnvironment.MapPath(src);
             if (String.IsNullOrWhiteSpace(fullpath) || !File.Exists(fullpath))
                 return null;
 
+            return fullpath;
+        }
+
+        /// <summary>
+        /// Gets the API response string as JSON format.
+        /// </summary>
+        /// <param name="src">Full qualified file path.</param>
+        /// <returns>Returns the API response string as JSON format.</returns>
+        public string GetApiResponse(string src)
+        {
             string response;
-            using (var reader = new StreamReader(fullpath))
+            using (var reader = new StreamReader(src))
             {
                 response = reader.ReadToEnd();
             }
@@ -192,12 +252,6 @@ namespace SimpleMockWebService.Services
             var url = items["url"];
             if (!this.IsValidPrefix(url))
                 return null;
-
-            //var api = this.GetApiElement(method, url);
-            //if (api == null)
-            //    return null;
-            //if (!this.HasValidJsonFileExtension(src))
-            //    src = this.GetDefaultApiResponseFilePath(method, url);
 
             var src = items["src"];
             if (String.IsNullOrWhiteSpace(src))

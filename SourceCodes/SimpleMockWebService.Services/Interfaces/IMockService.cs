@@ -38,6 +38,56 @@ namespace SimpleMockWebService.Services.Interfaces
         ApiElement GetApiElement(string method, string url);
 
         /// <summary>
+        /// Gets the list of segments from the URL, delimited with <c>/</c>.
+        /// </summary>
+        /// <param name="url">URL to get segments.</param>
+        /// <returns>Returns the list of URL segments.</returns>
+        IList<string> GetApiUrlSegments(string url);
+
+        /// <summary>
+        /// Gets the Web API controller name from the URL provided.
+        /// </summary>
+        /// <param name="url">URL to get the Web API controller name.</param>
+        /// <returns>Returns the Web API controller name.</returns>
+        string GetApiController(string url);
+
+        /// <summary>
+        /// Gets the list of parameters from the URL provided.
+        /// </summary>
+        /// <param name="url">URL to get parameters.</param>
+        /// <returns>Returns the list of parameters.</returns>
+        IList<string> GetApiParameters(string url);
+
+        /// <summary>
+        /// Gets the default response file path.
+        /// </summary>
+        /// <param name="api">ApiElement instance.</param>
+        /// <returns>Returns the default response file path.</returns>
+        string GetDefaultApiResponseFilePath(ApiElement api);
+
+        /// <summary>
+        /// Gets the default response file path.
+        /// </summary>
+        /// <param name="method">Method verb to get the response.</param>
+        /// <param name="url">URL to get the response.</param>
+        /// <returns>Returns the default response file path.</returns>
+        string GetDefaultApiResponseFilePath(string method, string url);
+
+        /// <summary>
+        /// Gets the full qualified response file path.
+        /// </summary>
+        /// <param name="api">ApiElement instance.</param>
+        /// <returns>Returns the full qualified response file path.</returns>
+        string GetApiReponseFullPath(ApiElement api);
+
+        /// <summary>
+        /// Gets the API response string as JSON format.
+        /// </summary>
+        /// <param name="src">Full qualified file path.</param>
+        /// <returns>Returns the API response string as JSON format.</returns>
+        string GetApiResponse(string src);
+
+        /// <summary>
         /// Gets the mocking response from the preset value.
         /// </summary>
         /// <param name="items">List of items to fetch response.</param>
