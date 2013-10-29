@@ -37,6 +37,17 @@ namespace SimpleMockWebService.Configurations
             set { this["verbs"] = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the list of JSON file extensions delimited with comma.
+        /// Default value is <c>json,js,txt</c>.
+        /// </summary>
+        [ConfigurationProperty("jsonFileExtensions", DefaultValue = "json,js,txt", IsRequired = false)]
+        public string JsonFileExtensions
+        {
+            get { return (string)this["jsonFileExtensions"]; }
+            set { this["jsonFileExtensions"] = value; }
+        }
+
         #endregion Properties
     }
 }

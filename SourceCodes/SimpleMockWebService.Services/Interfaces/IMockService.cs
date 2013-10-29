@@ -23,6 +23,13 @@ namespace SimpleMockWebService.Services.Interfaces
         bool IsValidMethod(string method);
 
         /// <summary>
+        /// Checks whether the given file path has a valid JSON file extension or not.
+        /// </summary>
+        /// <param name="src">File path to be validated.</param>
+        /// <returns>Returns <c>True</c>, if the given file path has a valid JSON file extension; otherwise returns <c>False</c>.</returns>
+        bool HasValidJsonFileExtension(string src);
+
+        /// <summary>
         /// Gets the Web API element based on the URL provided.
         /// </summary>
         /// <param name="method">Method verb to get the Web API element.</param>

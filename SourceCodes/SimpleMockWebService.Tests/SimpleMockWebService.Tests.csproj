@@ -78,10 +78,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Responses\delete.content.id.json" />
-    <None Include="Responses\put.content.id.json" />
+    <None Include="Responses\delete.content.1.json" />
+    <None Include="Responses\put.content.1.json" />
     <None Include="Responses\post.content.json" />
-    <None Include="Responses\get.content.id.json" />
+    <None Include="Responses\get.content.1.json" />
     <None Include="Responses\get.contents.json" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +96,15 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+if not exist "$(TargetDir)\Responses" (
+  md "$(TargetDir)\Responses"
+)
+
+xcopy "$(ProjectDir)Responses\*.*" "$(TargetDir)\Responses" /e /y
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
