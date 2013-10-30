@@ -11,6 +11,25 @@ namespace SimpleMockWebService.Configurations
     {
         #region Properties
 
+        private Regex _regexSourcePath;
+
+        /// <summary>
+        /// Gets the regular expression instance to check Web API prefix.
+        /// </summary>
+        public Regex RegexSourcePath
+        {
+            get
+            {
+                if (this._regexSourcePath == null)
+                    this._regexSourcePath = new Regex("^[A-Z]+:\\.+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                return this._regexSourcePath;
+            }
+        }
+
+        #endregion Properties
+
+        #region Properties
+
         /// <summary>
         /// Gets or sets the key for unique identification.
         /// </summary>
@@ -63,7 +82,7 @@ namespace SimpleMockWebService.Configurations
         [ConfigurationProperty("src", DefaultValue = "", IsRequired = false)]
         public string Src
         {
-            get { return GetResponsePath((string)this["src"]); }
+            get { return this.GetResponsePath((string)this["src"]); }
             set { this["src"] = value; }
         }
 
@@ -97,12 +116,12 @@ namespace SimpleMockWebService.Configurations
         ///         <item>The return value prepends the default location (<c>~/Responses</c>) to the given path, if nothing applies above. eg) <c>get.contents.json</c></item>
         ///     </list>
         /// </remarks>
-        private static string GetResponsePath(string src)
+        private string GetResponsePath(string src)
         {
             if (String.IsNullOrWhiteSpace(src))
                 return String.Empty;
 
-            if (Regex.IsMatch(src, "^[A-Z]:\\", RegexOptions.Compiled | RegexOptions.IgnoreCase))
+            if (this.RegexSourcePath.IsMatch(src))
                 return src;
 
             if (src.StartsWith("~/"))

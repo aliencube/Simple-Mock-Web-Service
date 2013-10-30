@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web.Hosting;
 
@@ -42,7 +43,7 @@ namespace SimpleMockWebService.Services
             get
             {
                 if (this._regexPrefix == null)
-                    this._regexPrefix = new Regex(@"^~?/(.*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                    this._regexPrefix = new Regex("^~?/(.*)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
                 return this._regexPrefix;
             }
         }
@@ -181,10 +182,12 @@ namespace SimpleMockWebService.Services
             var controller = this.GetApiController(url);
             var parameters = this.GetApiParameters(url);
 
-            var filepath = String.Format("~/Responses/{0}.{1}.{2}.json",
+            var filepath = String.Format("~/Responses/{0}.{1}{2}.json",
                                          method.ToLower(),
                                          controller.ToLower(),
-                                         String.Join(".", parameters));
+                                         parameters != null
+                                             ? String.Format(".{0}", String.Join(".", parameters))
+                                             : String.Empty);
             return filepath;
         }
 
@@ -199,11 +202,28 @@ namespace SimpleMockWebService.Services
             if (!this.HasValidJsonFileExtension(src))
                 src = this.GetDefaultApiResponseFilePath(api);
 
-            var fullpath = HostingEnvironment.MapPath(src);
-            if (String.IsNullOrWhiteSpace(fullpath) || !File.Exists(fullpath))
-                return null;
+            string fullpath;
+            if (HostingEnvironment.IsHosted)
+            {
+                fullpath = HostingEnvironment.MapPath(src);
+                return fullpath;
+            }
 
-            return fullpath;
+            var assembly = Assembly.GetExecutingAssembly();
+            var directory = Path.GetDirectoryName(assembly.Location);
+            fullpath = (directory + src.Replace("~/", "/")).Replace("/", "\\");
+            if (File.Exists(fullpath))
+                return fullpath;
+
+            var codebase = String.Join("/", assembly.CodeBase
+                                                    .Replace("file:///", "")
+                                                    .Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries)
+                                                    .TakeWhile(p => !p.ToLower().EndsWith(".dll")));
+            fullpath = (codebase + src.Replace("~/", "/")).Replace("/", "\\");
+            if (File.Exists(fullpath))
+                return fullpath;
+
+            return null;
         }
 
         /// <summary>
@@ -213,6 +233,9 @@ namespace SimpleMockWebService.Services
         /// <returns>Returns the API response string as JSON format.</returns>
         public string GetApiResponse(string src)
         {
+            if (!File.Exists(src))
+                return null;
+
             string response;
             using (var reader = new StreamReader(src))
             {

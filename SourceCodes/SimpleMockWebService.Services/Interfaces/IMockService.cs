@@ -1,11 +1,21 @@
 ﻿using SimpleMockWebService.Configurations;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace SimpleMockWebService.Services.Interfaces
 {
     public interface IMockService : IDisposable
     {
+        #region Properties
+
+        /// <summary>
+        /// Gets the regular expression instance to check Web API prefix.
+        /// </summary>
+        Regex RegexPrefix { get; }
+
+        #endregion Properties
+
         #region Methods
 
         /// <summary>
