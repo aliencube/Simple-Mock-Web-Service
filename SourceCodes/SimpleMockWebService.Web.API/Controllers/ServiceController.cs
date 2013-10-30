@@ -16,6 +16,7 @@ namespace SimpleMockWebService.Web.API.Controllers
         /// Initialises a new instance of the ServiceController class.
         /// </summary>
         /// <param name="settings">Configuration settings instance.</param>
+        /// <param name="service">Mock service instance.</param>
         public ServiceController(ISimpleMockWebServiceSettings settings, IMockService service)
         {
             this._settings = settings;
