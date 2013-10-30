@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace SimpleMockWebService.Web.API
+namespace SimpleMockWebService.Web.API.App_Start
 {
     public class FilterConfig
     {

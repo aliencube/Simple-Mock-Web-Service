@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using SimpleMockWebService.Configurations;
 using SimpleMockWebService.Configurations.Interfaces;
+using SimpleMockWebService.Services;
+using SimpleMockWebService.Services.Interfaces;
 using SimpleMockWebService.Web.API.Controllers;
 using System.Configuration;
 using System.Net.Http;
@@ -18,6 +20,7 @@ namespace SimpleMockWebService.Web.API.Tests
     public class ServiceControllerTest
     {
         private ISimpleMockWebServiceSettings _settings;
+        private IMockService _service;
         private ServiceController _controller;
         private HttpConfiguration _config;
         private HttpRouteData _routeData;
@@ -31,6 +34,7 @@ namespace SimpleMockWebService.Web.API.Tests
         public void Init()
         {
             this._settings = ConfigurationManager.GetSection("simpleMockWebService") as SimpleMockWebServiceSettings;
+            this._service = new MockService(this._settings);
 
             this._config = new HttpConfiguration();
             var route = this._config.Routes.MapHttpRoute("DefaultApi",
@@ -39,7 +43,7 @@ namespace SimpleMockWebService.Web.API.Tests
             this._routeData = new HttpRouteData(route,
                                               new HttpRouteValueDictionary() { { "controller", "Service" } });
 
-            this._controller = new ServiceController(this._settings);
+            this._controller = new ServiceController(this._settings, this._service);
             this._controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = this._config;
         }
 
@@ -52,6 +56,7 @@ namespace SimpleMockWebService.Web.API.Tests
         {
             this._controller.Dispose();
             this._config.Dispose();
+            this._service.Dispose();
             this._settings.Dispose();
         }
 

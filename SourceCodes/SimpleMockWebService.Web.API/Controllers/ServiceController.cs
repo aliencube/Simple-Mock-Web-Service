@@ -1,6 +1,7 @@
 ﻿using SimpleMockWebService.Configurations.Interfaces;
 using System.Net.Http;
 using System.Web.Http;
+using SimpleMockWebService.Services.Interfaces;
 
 namespace SimpleMockWebService.Web.API.Controllers
 {
@@ -15,9 +16,10 @@ namespace SimpleMockWebService.Web.API.Controllers
         /// Initialises a new instance of the ServiceController class.
         /// </summary>
         /// <param name="settings">Configuration settings instance.</param>
-        public ServiceController(ISimpleMockWebServiceSettings settings)
+        public ServiceController(ISimpleMockWebServiceSettings settings, IMockService service)
         {
             this._settings = settings;
+            this._service = service;
         }
 
         #endregion Constructors
@@ -25,42 +27,52 @@ namespace SimpleMockWebService.Web.API.Controllers
         #region Properties
 
         private readonly ISimpleMockWebServiceSettings _settings;
+        private readonly IMockService _service;
 
         #endregion Properties
 
         #region Methods
 
+        /// <summary>
+        /// Performs the action for the GET method.
+        /// </summary>
+        /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
         public HttpResponseMessage Get()
         {
             HttpResponseMessage response = null;
             return response;
         }
 
-        //// GET api/values
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/values/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST api/values
-        public void Post([FromBody]string value)
+        /// <summary>
+        /// Performs the action for the POST method.
+        /// </summary>
+        /// <param name="value">JSON string from the request body.</param>
+        /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
+        public HttpResponseMessage Post([FromBody]string value)
         {
+            HttpResponseMessage response = null;
+            return response;
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        /// <summary>
+        /// Performs the action for the PUT method.
+        /// </summary>
+        /// <param name="value">JSON string from the request body.</param>
+        /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
+        public HttpResponseMessage Put([FromBody]string value)
         {
+            HttpResponseMessage response = null;
+            return response;
         }
 
-        // DELETE api/values/5
-        public void Delete(int id)
+        /// <summary>
+        /// Performs the action for the DELETE method.
+        /// </summary>
+        /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
+        public HttpResponseMessage Delete()
         {
+            HttpResponseMessage response = null;
+            return response;
         }
 
         #endregion Methods
