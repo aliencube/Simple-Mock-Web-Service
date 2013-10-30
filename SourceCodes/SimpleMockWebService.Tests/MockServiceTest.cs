@@ -52,6 +52,37 @@ namespace SimpleMockWebService.Tests
             Assert.AreEqual(expected, validated);
         }
 
+        [Test]
+        [TestCase("~/responses/get.contents.json", true)]
+        [TestCase("", false)]
+        [TestCase("/responses/put.content.1.js", true)]
+        [TestCase("~/responses/get.contents.json", true)]
+        [TestCase("~/responses/delete.content.1.txt", true)]
+        public void HasValidJsonFileExtension_SendFilePath_ResultReturned(string src, bool expected)
+        {
+            var validated = this._service.HasValidJsonFileExtension(src);
+            Assert.AreEqual(expected, validated);
+        }
+
+        [Test]
+        [TestCase("get", "/api/contents", true)]
+        [TestCase("get", "/api/content/1", true)]
+        [TestCase("post", "/api/content/1", false)]
+        public void GetApiElement_SendMethodAndUrl_ApiElementReturned(string method, string url, bool expected)
+        {
+            var api = this._service.GetApiElement(method, url);
+            Assert.AreEqual(expected, api != null);
+        }
+
+        [Test]
+        [TestCase("/api/content/1", 2)]
+        [TestCase("/api/contents", 1)]
+        public void GetApiUrlSegments_SendUrl_SegmentsReturned(string url, int count)
+        {
+            var segments = this._service.GetApiUrlSegments(url);
+            Assert.AreEqual(count, segments.Count);
+        }
+
         #endregion Tests
     }
 }
