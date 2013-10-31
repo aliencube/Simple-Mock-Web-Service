@@ -1,10 +1,10 @@
-using System;
 using NUnit.Framework;
 using SimpleMockWebService.Configurations;
 using SimpleMockWebService.Configurations.Interfaces;
 using SimpleMockWebService.Services;
 using SimpleMockWebService.Services.Interfaces;
 using SimpleMockWebService.Web.API.Controllers;
+using System;
 using System.Configuration;
 using System.Net.Http;
 using System.Web.Http;
@@ -67,17 +67,35 @@ namespace SimpleMockWebService.Web.API.Tests
         #region Tests
 
         [Test]
-        [TestCase("/api/contents", true)]
-        [TestCase("/api/content/1", true)]
-        public void GetHttpResponseMessage_SendGetMethod_MessageReturned(string url, bool exists)
+        [TestCase("get", "/api/contents", 200)]
+        [TestCase("get", "/api/content/1", 200)]
+        [TestCase("post", "/api/content", 200)]
+        [TestCase("put", "/api/content/1", 200)]
+        [TestCase("delete", "/api/content/1", 200)]
+        public void GetHttpResponseMessage_SendMethodAndUrl_MessageReturned(string method, string url, int statusCode)
         {
-            using (var request = new HttpRequestMessage(HttpMethod.Get,
+            var httpMethod = Enum.Parse(typeof(HttpMethod), method, true) as HttpMethod;
+            using (var request = new HttpRequestMessage(httpMethod,
                                                         String.Format("http://localhost{0}", url)))
             {
+                string requestBody = null;
+                if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put)
+                {
+                    requestBody = "={\"id\": 1}";
+                    request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    request.Headers.Add("Content-Length", Convert.ToString(requestBody.Length));
+                }
                 this._controller.ControllerContext = new HttpControllerContext(this._config, this._routeData, request);
                 this._controller.Request = request;
-                using (var response = this._controller.Get())
+                using (var response = httpMethod == HttpMethod.Get
+                                          ? this._controller.Get()
+                                          : (httpMethod == HttpMethod.Post
+                                                 ? this._controller.Post(requestBody)
+                                                 : (httpMethod == HttpMethod.Put
+                                                        ? this._controller.Put(requestBody)
+                                                        : this._controller.Delete())))
                 {
+                    Assert.AreEqual(statusCode, response.StatusCode);
                 }
             }
         }
