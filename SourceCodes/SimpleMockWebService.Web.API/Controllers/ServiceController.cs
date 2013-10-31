@@ -1,8 +1,5 @@
-﻿using SimpleMockWebService.Configurations;
-using SimpleMockWebService.Configurations.Interfaces;
-using SimpleMockWebService.Services;
+﻿using SimpleMockWebService.Configurations.Interfaces;
 using SimpleMockWebService.Services.Interfaces;
-using System.Configuration;
 using System.Net.Http;
 using System.Web.Http;
 
@@ -15,44 +12,23 @@ namespace SimpleMockWebService.Web.API.Controllers
     {
         #region Constructors
 
-        ///// <summary>
-        ///// Initialises a new instance of the ServiceController class.
-        ///// </summary>
-        ///// <param name="settings">Configuration settings instance.</param>
-        ///// <param name="service">Mock service instance.</param>
-        //public ServiceController(ISimpleMockWebServiceSettings settings, IMockService service)
-        //{
-        //    this._settings = settings;
-        //    this._service = service;
-        //}
+        /// <summary>
+        /// Initialises a new instance of the ServiceController class.
+        /// </summary>
+        /// <param name="settings">Configuration settings instance.</param>
+        /// <param name="service">Mock service instance.</param>
+        public ServiceController(ISimpleMockWebServiceSettings settings, IMockService service)
+        {
+            this._settings = settings;
+            this._service = service;
+        }
 
         #endregion Constructors
 
         #region Properties
 
-        private ISimpleMockWebServiceSettings _settings;
-
-        public ISimpleMockWebServiceSettings Settings
-        {
-            get
-            {
-                if (this._settings == null)
-                    this._settings = ConfigurationManager.GetSection("simpleMockWebService") as SimpleMockWebServiceSettings;
-                return this._settings;
-            }
-        }
-
-        private IMockService _service;
-
-        public IMockService Service
-        {
-            get
-            {
-                if (this._service == null)
-                    this._service = new MockService(this.Settings);
-                return this._service;
-            }
-        }
+        private readonly ISimpleMockWebServiceSettings _settings;
+        private readonly IMockService _service;
 
         #endregion Properties
 
@@ -64,7 +40,7 @@ namespace SimpleMockWebService.Web.API.Controllers
         /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
         public HttpResponseMessage Get()
         {
-            var response = this._service.GetResponse(Request);
+            var response = this._service.GetHttpResponse(Request);
             return response;
         }
 
@@ -75,7 +51,7 @@ namespace SimpleMockWebService.Web.API.Controllers
         /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
         public HttpResponseMessage Post([FromBody]string value)
         {
-            var response = this._service.GetResponse(Request, value);
+            var response = this._service.GetHttpResponse(Request, value);
             return response;
         }
 
@@ -86,7 +62,7 @@ namespace SimpleMockWebService.Web.API.Controllers
         /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
         public HttpResponseMessage Put([FromBody]string value)
         {
-            var response = this._service.GetResponse(Request, value);
+            var response = this._service.GetHttpResponse(Request, value);
             return response;
         }
 
@@ -96,7 +72,7 @@ namespace SimpleMockWebService.Web.API.Controllers
         /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
         public HttpResponseMessage Delete()
         {
-            var response = this._service.GetResponse(Request);
+            var response = this._service.GetHttpResponse(Request);
             return response;
         }
 
