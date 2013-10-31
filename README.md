@@ -16,12 +16,12 @@ In order to run **SimpleMock**, it requires:
 * IIS 7.0 or higher
 * [URL Rewrite module](http://www.iis.net/downloads/microsoft/url-rewrite)
 
-**SimpleMock** can be run on IIS 6 with a 3rd party URL rewriting module like [Ionics Isapi Rewrite Filter(IIRF)](http://iirf.codeplex.com), [Helicon URL Rewrite](http://www.isapirewrite.com) or [UrlRewritingNet.UrlRewrite](http://www.urlrewriting.net), as long as .NET Framework 4.5 or higher is installed and run on the server machine.
+*NOTE* : **SimpleMock** can be run on IIS 6 with a 3rd party URL rewriting module like [Ionics Isapi Rewrite Filter(IIRF)](http://iirf.codeplex.com), [Helicon URL Rewrite](http://www.isapirewrite.com) or [UrlRewritingNet.UrlRewrite](http://www.urlrewriting.net), as long as .NET Framework 4.5 or higher is installed and run on the server machine.
 
 
 # Getting Started #
 
-Once your IIS has been setup with a URL of `simplemock.local`, just simply run one of the following URLs:
+Once your IIS has been setup with a URL of `simplemock.local`, for example, just simply run one of the following URLs:
 
     GET		http://simplemock.local/api/contents
     GET		http://simplemock.local/api/content/1
@@ -80,29 +80,64 @@ If you want to add your custom RESful URLs, you can simply modify the `SimpleMoc
 
 # RESTful Web Services #
 
+Each method returns JSON response that is predefined and stored in the specified location on the server.
+
 ## GET ##
 
-TBD
+    <api key="GetContents" group="Content" method="get" url="/api/contents" src="~/responses/get.contents.json" />
+    <api key="GetContentById" method="get" url="/api/content/1" src="get.content.1.json" delay="0" />
+
+The configurations above expect the `GET` requests below respectively:
+
+    http://simplemock.local/api/contents
+    http://simplemock.local/api/content/1
+
+Therefore, each request returns JSON response respectively like:
+
+    [{ "id": 1, "title": "title 1" }, { "id": 2, "title": "title 2" }, { "id": 3, "title": "title 3" }]
+    { "id": 1, "title": "title 1" }
 
 
 ## POST ##
 
-TBD
+    <api key="PostContent" method="post" url="/api/content" delay="0" />
+
+The configuration above expects the `POST` requests below:
+
+    http://simplemock.local/api/content
+
+Therefore, the request returns the JSON response like:
+
+    { "id": 1, "title": "title 1" }
 
 
 ## PUT ##
 
-TBD
+    <api key="PutContentById" method="put" url="/api/content/1" src="/responses/put.content.1.json" delay="0" />
 
+The configuration above expects the `PUT` requests below:
+
+    http://simplemock.local/api/content/1
+
+Therefore, the request returns the JSON response like:
+
+    { "id": 1, "title": "title 1" }
 
 ## DELETE ##
 
-TBD
+    <api key="DeleteContentById" method="delete" url="/api/content/1" src="~/responses/delete.content.1.json" />
 
+The configuration above expects the `DELETE` requests below:
 
-## HEAD ##
+    http://simplemock.local/api/content/1
 
-TBD
+Therefore, the request returns the JSON response like:
+
+    { "id": 1, "title": "title 1" }
+
+## Other Verbs ##
+
+Depending on your preferences, you can predefine any acceptable RESTful method and store its desirable response on the server and use it.
 
 
 # License #
