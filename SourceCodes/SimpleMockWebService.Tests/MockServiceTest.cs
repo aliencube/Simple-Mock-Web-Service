@@ -7,6 +7,8 @@ using System;
 using System.Configuration;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Web.Http;
+using System.Web.Http.Hosting;
 
 namespace SimpleMockWebService.Tests
 {
@@ -15,6 +17,7 @@ namespace SimpleMockWebService.Tests
     {
         private ISimpleMockWebServiceSettings _settings;
         private IMockService _service;
+        private HttpConfiguration _config;
         private Regex _regexSourcePath;
 
         #region SetUp / TearDown
@@ -24,6 +27,7 @@ namespace SimpleMockWebService.Tests
         {
             this._settings = ConfigurationManager.GetSection("simpleMockWebService") as SimpleMockWebServiceSettings;
             this._service = new MockService(this._settings);
+            this._config = new HttpConfiguration();
             this._regexSourcePath = new Regex(@"^[A-Z]+:\\.+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
 
@@ -31,6 +35,7 @@ namespace SimpleMockWebService.Tests
         public void Dispose()
         {
             this._service.Dispose();
+            this._config.Dispose();
             this._settings.Dispose();
         }
 
@@ -45,8 +50,8 @@ namespace SimpleMockWebService.Tests
         [TestCase("delete", false)]
         public void IsRequestBodyRequired_SendMethod_ResultReturned(string method, bool expected)
         {
-            var httpMethod = Enum.Parse(typeof(HttpMethod), method, true) as HttpMethod;
-            using (var request = new HttpRequestMessage(httpMethod, "http://localhost{0}"))
+            var httpMethod = new HttpMethod(method);
+            using (var request = new HttpRequestMessage(httpMethod, "http://localhost"))
             {
                 var required = this._service.IsRequestBodyRequired(request);
                 Assert.AreEqual(expected, required);
@@ -133,7 +138,7 @@ namespace SimpleMockWebService.Tests
         [TestCase("get", "/api/contents", "~/responses/get.contents.json")]
         [TestCase("get", "/api/content/1", "~/responses/get.content.1.json")]
         [TestCase("get", "/api/content/1/title", "~/responses/get.content.1.title.json")]
-        [TestCase("post", "/api/content", "~/response/post.content.json")]
+        [TestCase("post", "/api/content", "~/responses/post.content.json")]
         [TestCase("put", "/api/content/1", "~/responses/put.content.1.json")]
         [TestCase("delete", "/api/content/1", "~/responses/delete.content.1.json")]
         public void GetDefaultApiResponseFilePath_SendMethodAndUrl_ResponseFilePathReturned(string method,
@@ -182,12 +187,12 @@ namespace SimpleMockWebService.Tests
         [TestCase("get", "/content/not-found", "", 404)]
         public void GetHttpResponse_SendMethodAndUrl_JsonResponseReturned(string method, string url, string value, int statusCode)
         {
-            var httpMethod = Enum.Parse(typeof(HttpMethod), method, true) as HttpMethod;
-            using (var request = new HttpRequestMessage(httpMethod,
-                                                        String.Format("http://localhost{0}", url)))
+            var httpMethod = new HttpMethod(method);
+            using (var request = new HttpRequestMessage(httpMethod, String.Format("http://localhost?url={0}", url)))
             {
+                request.Properties[HttpPropertyKeys.HttpConfigurationKey] = this._config;
                 var response = this._service.GetHttpResponse(request, value);
-                Assert.AreEqual(statusCode, response.StatusCode);
+                Assert.AreEqual(statusCode, Convert.ToInt32(response.StatusCode));
             }
         }
 

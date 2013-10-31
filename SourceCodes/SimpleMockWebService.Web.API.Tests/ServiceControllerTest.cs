@@ -42,10 +42,12 @@ namespace SimpleMockWebService.Web.API.Tests
                                                          "api/{controller}/{id}",
                                                          new { id = RouteParameter.Optional });
             this._routeData = new HttpRouteData(route,
-                                              new HttpRouteValueDictionary() { { "controller", "Service" } });
+                                                new HttpRouteValueDictionary()
+                                                {
+                                                    { "controller", "Service" }
+                                                });
 
             this._controller = new ServiceController(this._settings, this._service);
-            this._controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = this._config;
         }
 
         /// <summary>
@@ -77,16 +79,12 @@ namespace SimpleMockWebService.Web.API.Tests
         [TestCase("get", "/content/not-found", "", 404)]
         public void GetHttpResponseMessage_SendMethodAndUrl_MessageReturned(string method, string url, string value, int statusCode)
         {
-            var httpMethod = Enum.Parse(typeof(HttpMethod), method, true) as HttpMethod;
-            using (var request = new HttpRequestMessage(httpMethod, "http://localhost"))
+            var httpMethod = new HttpMethod(method);
+            using (var request = new HttpRequestMessage(httpMethod, String.Format("http://localhost?url={0}", url)))
             {
-                if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put)
-                {
-                    request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    request.Headers.Add("Content-Length", Convert.ToString(value.Length));
-                }
-                this._controller.ControllerContext = new HttpControllerContext(this._config, this._routeData, request);
+                request.Properties[HttpPropertyKeys.HttpConfigurationKey] = this._config;
                 this._controller.Request = request;
+                this._controller.ControllerContext = new HttpControllerContext(this._config, this._routeData, request);
                 using (var response = httpMethod == HttpMethod.Get
                                           ? this._controller.Get()
                                           : (httpMethod == HttpMethod.Post
@@ -95,7 +93,7 @@ namespace SimpleMockWebService.Web.API.Tests
                                                         ? this._controller.Put(value)
                                                         : this._controller.Delete())))
                 {
-                    Assert.AreEqual(statusCode, response.StatusCode);
+                    Assert.AreEqual(statusCode, Convert.ToInt32(response.StatusCode));
                 }
             }
         }

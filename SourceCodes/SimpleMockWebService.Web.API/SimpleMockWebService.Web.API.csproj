@@ -188,7 +188,9 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>move /y "$(TargetDir)*.config" "$(ProjectDir)"</PostBuildEvent>
+    <PostBuildEvent>
+move /y "$(TargetDir)*.config" "$(ProjectDir)"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

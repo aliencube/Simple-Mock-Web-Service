@@ -62,7 +62,7 @@ namespace SimpleMockWebService.Services
         /// <returns>Returns <c>True</c>, if the request method verb requires body content - POST or PUT; otherwise returns <c>False</c>.</returns>
         public bool IsRequestBodyRequired(HttpRequestMessage request)
         {
-            var method = Enum.Parse(typeof(HttpMethod), request.Method.Method, true) as HttpMethod;
+            var method = request.Method;
             var isRequestBodyRequired = method == HttpMethod.Post || method == HttpMethod.Put;
             return isRequestBodyRequired;
         }
