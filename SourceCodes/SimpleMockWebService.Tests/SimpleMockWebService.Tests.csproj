@@ -72,7 +72,7 @@
   <ItemGroup>
     <None Include="..\..\Documents\Configurations\SimpleMockWebService.config">
       <Link>SimpleMockWebService.config</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
     <None Include="App.config">

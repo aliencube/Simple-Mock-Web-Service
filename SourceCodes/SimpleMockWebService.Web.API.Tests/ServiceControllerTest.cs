@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using SimpleMockWebService.Configurations;
 using SimpleMockWebService.Configurations.Interfaces;
@@ -43,7 +44,8 @@ namespace SimpleMockWebService.Web.API.Tests
             this._routeData = new HttpRouteData(route,
                                               new HttpRouteValueDictionary() { { "controller", "Service" } });
 
-            this._controller = new ServiceController(this._settings, this._service);
+            this._controller = new ServiceController();
+            //this._controller = new ServiceController(this._settings, this._service);
             this._controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = this._config;
         }
 
@@ -65,12 +67,12 @@ namespace SimpleMockWebService.Web.API.Tests
         #region Tests
 
         [Test]
-        [TestCase(1, true)]
-        [TestCase(null, true)]
-        public void GetHttpResponseMessage_SendGetMethod_MessageReturned(int? id, bool exists)
+        [TestCase("/api/contents", true)]
+        [TestCase("/api/content/1", true)]
+        public void GetHttpResponseMessage_SendGetMethod_MessageReturned(string url, bool exists)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get,
-                                                        "http://localhost/api/service"))
+                                                        String.Format("http://localhost{0}", url)))
             {
                 this._controller.ControllerContext = new HttpControllerContext(this._config, this._routeData, request);
                 this._controller.Request = request;

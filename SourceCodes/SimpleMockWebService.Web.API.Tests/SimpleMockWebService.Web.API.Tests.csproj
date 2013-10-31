@@ -128,9 +128,14 @@
   <ItemGroup>
     <None Include="..\..\Documents\Configurations\SimpleMockWebService.config">
       <Link>SimpleMockWebService.config</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Responses\delete.content.1.json" />
+    <None Include="Responses\get.content.1.json" />
+    <None Include="Responses\get.contents.json" />
+    <None Include="Responses\post.content.json" />
+    <None Include="Responses\put.content.1.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SimpleMockWebService.Configurations\SimpleMockWebService.Configurations.csproj">

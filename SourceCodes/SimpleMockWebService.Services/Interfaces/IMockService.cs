@@ -86,6 +86,14 @@ namespace SimpleMockWebService.Services.Interfaces
         /// <summary>
         /// Gets the full qualified response file path.
         /// </summary>
+        /// <param name="method">Method verb to get the response file path.</param>
+        /// <param name="url">URL to get the response file path.</param>
+        /// <returns>Returns the full qualified response file path.</returns>
+        string GetApiReponseFullPath(string method, string url);
+
+        /// <summary>
+        /// Gets the full qualified response file path.
+        /// </summary>
         /// <param name="api">ApiElement instance.</param>
         /// <returns>Returns the full qualified response file path.</returns>
         string GetApiReponseFullPath(ApiElement api);
