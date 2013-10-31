@@ -1,6 +1,7 @@
 ﻿using SimpleMockWebService.Configurations;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 
 namespace SimpleMockWebService.Services.Interfaces
@@ -109,6 +110,7 @@ namespace SimpleMockWebService.Services.Interfaces
         /// Gets the mocking response from the preset value.
         /// </summary>
         /// <param name="items">List of items to fetch response.</param>
+        /// <param name="value">JSON string from the request body.</param>
         /// <returns>
         /// Returns either:
         ///     <list type="bullet">
@@ -116,7 +118,22 @@ namespace SimpleMockWebService.Services.Interfaces
         ///         <item><c>null</c>, if the input items don't have URL or method verb, or invalid URL or method verb.</item>
         ///     </list>
         /// </returns>
-        string GetResponse(IDictionary<string, string> items);
+        string GetResponse(IDictionary<string, string> items, string value = null);
+
+        /// <summary>
+        /// Get the list of items for processing.
+        /// </summary>
+        /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
+        /// <returns>Returns the list of items for processing.</returns>
+        IDictionary<string, string> GetItems(HttpRequestMessage request);
+
+        /// <summary>
+        /// Gets the HTTP response to return.
+        /// </summary>
+        /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
+        /// <param name="value">JSON string from the request body.</param>
+        /// <returns>Returns the HTTP response.</returns>
+        HttpResponseMessage GetResponse(HttpRequestMessage request, string value = null);
 
         #endregion Methods
     }

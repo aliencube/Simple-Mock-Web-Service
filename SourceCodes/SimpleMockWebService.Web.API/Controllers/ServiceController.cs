@@ -1,13 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using SimpleMockWebService.Configurations;
+﻿using SimpleMockWebService.Configurations;
 using SimpleMockWebService.Configurations.Interfaces;
 using SimpleMockWebService.Services;
 using SimpleMockWebService.Services.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
@@ -64,42 +59,12 @@ namespace SimpleMockWebService.Web.API.Controllers
         #region Methods
 
         /// <summary>
-        /// Get the list of items for processing.
-        /// </summary>
-        /// <returns>Returns the list of items for processing.</returns>
-        private IDictionary<string, string> GetItems()
-        {
-            var items = Request.GetQueryNameValuePairs().ToDictionary(p => p.Key, p => p.Value);
-            items.Add("method", Request.Method.Method);
-            items.Add("src", this.Service.GetApiReponseFullPath(items["method"], items["url"]));
-            return items;
-        }
-
-        /// <summary>
-        /// Gets the HTTP response to return.
-        /// </summary>
-        /// <param name="value">JSON string from the request body.</param>
-        /// <returns>Returns the HTTP response.</returns>
-        private HttpResponseMessage GetResponse(string value = null)
-        {
-            var items = this.GetItems();
-
-            var json = this.Service.GetResponse(items);
-            var response = String.IsNullOrWhiteSpace(json)
-                               ? Request.CreateResponse(HttpStatusCode.NotFound)
-                               : Request.CreateResponse(HttpStatusCode.OK, json.StartsWith("[")
-                                                                               ? JArray.Parse(json)
-                                                                               : JToken.Parse(json));
-            return response;
-        }
-
-        /// <summary>
         /// Performs the action for the GET method.
         /// </summary>
         /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
         public HttpResponseMessage Get()
         {
-            var response = this.GetResponse();
+            var response = this._service.GetResponse(Request);
             return response;
         }
 
@@ -110,7 +75,7 @@ namespace SimpleMockWebService.Web.API.Controllers
         /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
         public HttpResponseMessage Post([FromBody]string value)
         {
-            var response = this.GetResponse(value);
+            var response = this._service.GetResponse(Request, value);
             return response;
         }
 
@@ -121,7 +86,7 @@ namespace SimpleMockWebService.Web.API.Controllers
         /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
         public HttpResponseMessage Put([FromBody]string value)
         {
-            var response = this.GetResponse(value);
+            var response = this._service.GetResponse(Request, value);
             return response;
         }
 
@@ -131,7 +96,7 @@ namespace SimpleMockWebService.Web.API.Controllers
         /// <returns>Returns the <c>HttpResponseMessage</c> instance.</returns>
         public HttpResponseMessage Delete()
         {
-            var response = this.GetResponse();
+            var response = this._service.GetResponse(Request);
             return response;
         }
 

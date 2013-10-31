@@ -1,10 +1,13 @@
-﻿using SimpleMockWebService.Configurations;
+﻿using Newtonsoft.Json.Linq;
+using SimpleMockWebService.Configurations;
 using SimpleMockWebService.Configurations.Interfaces;
 using SimpleMockWebService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web.Hosting;
@@ -260,6 +263,7 @@ namespace SimpleMockWebService.Services
         /// Gets the mocking response from the preset value.
         /// </summary>
         /// <param name="items">List of items to fetch response.</param>
+        /// <param name="value">JSON string from the request body.</param>
         /// <returns>
         /// Returns either:
         ///     <list type="bullet">
@@ -269,7 +273,7 @@ namespace SimpleMockWebService.Services
         ///             or invalid URL, method verb or source file path.</item>
         ///     </list>
         /// </returns>
-        public string GetResponse(IDictionary<string, string> items)
+        public string GetResponse(IDictionary<string, string> items, string value)
         {
             if (!items.ContainsKey("method"))
                 return null;
@@ -293,6 +297,38 @@ namespace SimpleMockWebService.Services
                 return null;
 
             var response = this.GetApiResponse(src);
+            return response;
+        }
+
+        /// <summary>
+        /// Get the list of items for processing.
+        /// </summary>
+        /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
+        /// <returns>Returns the list of items for processing.</returns>
+        public IDictionary<string, string> GetItems(HttpRequestMessage request)
+        {
+            var items = request.GetQueryNameValuePairs().ToDictionary(p => p.Key, p => p.Value);
+            items.Add("method", request.Method.Method);
+            items.Add("src", this.GetApiReponseFullPath(items["method"], items["url"]));
+            return items;
+        }
+
+        /// <summary>
+        /// Gets the HTTP response to return.
+        /// </summary>
+        /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
+        /// <param name="value">JSON string from the request body.</param>
+        /// <returns>Returns the HTTP response.</returns>
+        public HttpResponseMessage GetResponse(HttpRequestMessage request, string value = null)
+        {
+            var items = this.GetItems(request);
+
+            var json = this.GetResponse(items, value);
+            var response = String.IsNullOrWhiteSpace(json)
+                               ? request.CreateResponse(HttpStatusCode.NotFound)
+                               : request.CreateResponse(HttpStatusCode.OK, json.StartsWith("[")
+                                                                               ? JArray.Parse(json)
+                                                                               : JToken.Parse(json));
             return response;
         }
 
