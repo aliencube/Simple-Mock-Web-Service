@@ -76,7 +76,7 @@ namespace SimpleMockWebService.Web.API.Tests
         {
             var httpMethod = Enum.Parse(typeof(HttpMethod), method, true) as HttpMethod;
             using (var request = new HttpRequestMessage(httpMethod,
-                                                        String.Format("http://localhost{0}", url)))
+                                                        String.Format("http://localhost/api/service?url={0}", url)))
             {
                 string requestBody = null;
                 if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put)
