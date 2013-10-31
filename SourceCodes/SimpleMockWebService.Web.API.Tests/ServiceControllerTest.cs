@@ -44,8 +44,7 @@ namespace SimpleMockWebService.Web.API.Tests
             this._routeData = new HttpRouteData(route,
                                               new HttpRouteValueDictionary() { { "controller", "Service" } });
 
-            this._controller = new ServiceController();
-            //this._controller = new ServiceController(this._settings, this._service);
+            this._controller = new ServiceController(this._settings, this._service);
             this._controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = this._config;
         }
 
@@ -67,32 +66,33 @@ namespace SimpleMockWebService.Web.API.Tests
         #region Tests
 
         [Test]
-        [TestCase("get", "/api/contents", 200)]
-        [TestCase("get", "/api/content/1", 200)]
-        [TestCase("post", "/api/content", 200)]
-        [TestCase("put", "/api/content/1", 200)]
-        [TestCase("delete", "/api/content/1", 200)]
-        public void GetHttpResponseMessage_SendMethodAndUrl_MessageReturned(string method, string url, int statusCode)
+        [TestCase("get", "/api/contents", "", 200)]
+        [TestCase("get", "/api/content/1", "", 200)]
+        [TestCase("post", "/api/content", "={ \"id\": 1 }", 200)]
+        [TestCase("put", "/api/content/1", "={ \"id\": 1 }", 200)]
+        [TestCase("put", "/api/content/1", "", 415)]
+        [TestCase("delete", "/api/content/1", "", 200)]
+        [TestCase("head", "/api/content/1", "", 405)]
+        [TestCase("get", "/content/1", "", 404)]
+        [TestCase("get", "/content/not-found", "", 404)]
+        public void GetHttpResponseMessage_SendMethodAndUrl_MessageReturned(string method, string url, string value, int statusCode)
         {
             var httpMethod = Enum.Parse(typeof(HttpMethod), method, true) as HttpMethod;
-            using (var request = new HttpRequestMessage(httpMethod,
-                                                        String.Format("http://localhost/api/service?url={0}", url)))
+            using (var request = new HttpRequestMessage(httpMethod, "http://localhost"))
             {
-                string requestBody = null;
                 if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put)
                 {
-                    requestBody = "={\"id\": 1}";
                     request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    request.Headers.Add("Content-Length", Convert.ToString(requestBody.Length));
+                    request.Headers.Add("Content-Length", Convert.ToString(value.Length));
                 }
                 this._controller.ControllerContext = new HttpControllerContext(this._config, this._routeData, request);
                 this._controller.Request = request;
                 using (var response = httpMethod == HttpMethod.Get
                                           ? this._controller.Get()
                                           : (httpMethod == HttpMethod.Post
-                                                 ? this._controller.Post(requestBody)
+                                                 ? this._controller.Post(value)
                                                  : (httpMethod == HttpMethod.Put
-                                                        ? this._controller.Put(requestBody)
+                                                        ? this._controller.Put(value)
                                                         : this._controller.Delete())))
                 {
                     Assert.AreEqual(statusCode, response.StatusCode);
