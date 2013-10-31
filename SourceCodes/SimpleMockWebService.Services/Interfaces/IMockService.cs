@@ -20,11 +20,11 @@ namespace SimpleMockWebService.Services.Interfaces
         #region Methods
 
         /// <summary>
-        /// Checks whether the given URL starts with the valid prefix or not.
+        /// Gets the value that specifies whether the request method verb requires body content - POST or PUT - or not.
         /// </summary>
-        /// <param name="url">URL to be validated.</param>
-        /// <returns>Returns <c>True</c>, if the given URL starts with the valid prefix; otherwise returns <c>False</c>.</returns>
-        bool IsValidPrefix(string url);
+        /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
+        /// <returns>Returns <c>True</c>, if the request method verb requires body content - POST or PUT; otherwise returns <c>False</c>.</returns>
+        bool IsRequestBodyRequired(HttpRequestMessage request);
 
         /// <summary>
         /// Checks whether the given method verb is valid or not.
@@ -32,6 +32,13 @@ namespace SimpleMockWebService.Services.Interfaces
         /// <param name="method">Method verb to be validated.</param>
         /// <returns>Returns <c>True</c>, if the given method verb is valid; otherwise returns <c>False</c>.</returns>
         bool IsValidMethod(string method);
+
+        /// <summary>
+        /// Checks whether the given URL starts with the valid prefix or not.
+        /// </summary>
+        /// <param name="url">URL to be validated.</param>
+        /// <returns>Returns <c>True</c>, if the given URL starts with the valid prefix; otherwise returns <c>False</c>.</returns>
+        bool IsValidPrefix(string url);
 
         /// <summary>
         /// Checks whether the given file path has a valid JSON file extension or not.
@@ -107,33 +114,12 @@ namespace SimpleMockWebService.Services.Interfaces
         string GetApiResponse(string src);
 
         /// <summary>
-        /// Gets the mocking response from the preset value.
-        /// </summary>
-        /// <param name="items">List of items to fetch response.</param>
-        /// <param name="value">JSON string from the request body.</param>
-        /// <returns>
-        /// Returns either:
-        ///     <list type="bullet">
-        ///         <item>The mocking response from the preset value, or</item>
-        ///         <item><c>null</c>, if the input items don't have URL or method verb, or invalid URL or method verb.</item>
-        ///     </list>
-        /// </returns>
-        string GetResponse(IDictionary<string, string> items, string value = null);
-
-        /// <summary>
-        /// Get the list of items for processing.
-        /// </summary>
-        /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
-        /// <returns>Returns the list of items for processing.</returns>
-        IDictionary<string, string> GetItems(HttpRequestMessage request);
-
-        /// <summary>
         /// Gets the HTTP response to return.
         /// </summary>
         /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
         /// <param name="value">JSON string from the request body.</param>
         /// <returns>Returns the HTTP response.</returns>
-        HttpResponseMessage GetResponse(HttpRequestMessage request, string value = null);
+        HttpResponseMessage GetHttpResponse(HttpRequestMessage request, string value = null);
 
         #endregion Methods
     }

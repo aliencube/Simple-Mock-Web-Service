@@ -56,18 +56,15 @@ namespace SimpleMockWebService.Services
         #region Methods
 
         /// <summary>
-        /// Checks whether the given URL starts with the valid prefix or not.
+        /// Gets the value that specifies whether the request method verb requires body content - POST or PUT - or not.
         /// </summary>
-        /// <param name="url">URL to be validated.</param>
-        /// <returns>Returns <c>True</c>, if the given URL starts with the valid prefix; otherwise returns <c>False</c>.</returns>
-        public bool IsValidPrefix(string url)
+        /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
+        /// <returns>Returns <c>True</c>, if the request method verb requires body content - POST or PUT; otherwise returns <c>False</c>.</returns>
+        public bool IsRequestBodyRequired(HttpRequestMessage request)
         {
-            if (String.IsNullOrWhiteSpace(url))
-                return false;
-
-            url = this.RegexPrefix.Replace(url, "$1").ToLower();
-            var validated = url.StartsWith(this._settings.GlobalSettings.WebApiPrefix.ToLower());
-            return validated;
+            var method = Enum.Parse(typeof(HttpMethod), request.Method.Method, true) as HttpMethod;
+            var isRequestBodyRequired = method == HttpMethod.Post || method == HttpMethod.Put;
+            return isRequestBodyRequired;
         }
 
         /// <summary>
@@ -86,6 +83,21 @@ namespace SimpleMockWebService.Services
                                 .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                                 .Select(p => p.ToLower())
                                 .Contains(method.ToLower());
+            return validated;
+        }
+
+        /// <summary>
+        /// Checks whether the given URL starts with the valid prefix or not.
+        /// </summary>
+        /// <param name="url">URL to be validated.</param>
+        /// <returns>Returns <c>True</c>, if the given URL starts with the valid prefix; otherwise returns <c>False</c>.</returns>
+        public bool IsValidPrefix(string url)
+        {
+            if (String.IsNullOrWhiteSpace(url))
+                return false;
+
+            url = this.RegexPrefix.Replace(url, "$1").ToLower();
+            var validated = url.StartsWith(this._settings.GlobalSettings.WebApiPrefix.ToLower());
             return validated;
         }
 
@@ -260,72 +272,31 @@ namespace SimpleMockWebService.Services
         }
 
         /// <summary>
-        /// Gets the mocking response from the preset value.
-        /// </summary>
-        /// <param name="items">List of items to fetch response.</param>
-        /// <param name="value">JSON string from the request body.</param>
-        /// <returns>
-        /// Returns either:
-        ///     <list type="bullet">
-        ///         <item>The mocking response from the preset value, or</item>
-        ///         <item>
-        ///             <c>null</c>, if the input items don't have URL, method verb or source file path,
-        ///             or invalid URL, method verb or source file path.</item>
-        ///     </list>
-        /// </returns>
-        public string GetResponse(IDictionary<string, string> items, string value)
-        {
-            if (!items.ContainsKey("method"))
-                return null;
-
-            if (!items.ContainsKey("url"))
-                return null;
-
-            if (!items.ContainsKey("src"))
-                return null;
-
-            var method = items["method"];
-            if (!this.IsValidMethod(method))
-                return null;
-
-            var url = items["url"];
-            if (!this.IsValidPrefix(url))
-                return null;
-
-            var src = items["src"];
-            if (String.IsNullOrWhiteSpace(src))
-                return null;
-
-            var response = this.GetApiResponse(src);
-            return response;
-        }
-
-        /// <summary>
-        /// Get the list of items for processing.
-        /// </summary>
-        /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
-        /// <returns>Returns the list of items for processing.</returns>
-        public IDictionary<string, string> GetItems(HttpRequestMessage request)
-        {
-            var items = request.GetQueryNameValuePairs().ToDictionary(p => p.Key, p => p.Value);
-            items.Add("method", request.Method.Method);
-            items.Add("src", this.GetApiReponseFullPath(items["method"], items["url"]));
-            return items;
-        }
-
-        /// <summary>
         /// Gets the HTTP response to return.
         /// </summary>
         /// <param name="request"><c>HttpRequestMessage</c> instance.</param>
         /// <param name="value">JSON string from the request body.</param>
         /// <returns>Returns the HTTP response.</returns>
-        public HttpResponseMessage GetResponse(HttpRequestMessage request, string value = null)
+        public HttpResponseMessage GetHttpResponse(HttpRequestMessage request, string value = null)
         {
-            var items = this.GetItems(request);
+            if (this.IsRequestBodyRequired(request) && String.IsNullOrWhiteSpace(value))
+                return request.CreateResponse(HttpStatusCode.UnsupportedMediaType);
 
-            var json = this.GetResponse(items, value);
+            var method = request.Method.Method;
+            if (!this.IsValidMethod(method))
+                return request.CreateResponse(HttpStatusCode.MethodNotAllowed);
+
+            var url = request.GetQueryNameValuePairs().ToDictionary(p => p.Key, p => p.Value)["url"];
+            if (!this.IsValidPrefix(url))
+                return request.CreateResponse(HttpStatusCode.NotFound);
+
+            var src = this.GetApiReponseFullPath(method, url);
+            if (String.IsNullOrWhiteSpace(src))
+                return request.CreateResponse(HttpStatusCode.NotFound);
+
+            var json = this.GetApiResponse(src);
             var response = String.IsNullOrWhiteSpace(json)
-                               ? request.CreateResponse(HttpStatusCode.NotFound)
+                               ? request.CreateResponse(HttpStatusCode.NoContent)
                                : request.CreateResponse(HttpStatusCode.OK, json.StartsWith("[")
                                                                                ? JArray.Parse(json)
                                                                                : JToken.Parse(json));
