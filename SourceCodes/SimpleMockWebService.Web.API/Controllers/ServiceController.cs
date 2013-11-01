@@ -1,5 +1,4 @@
-﻿using SimpleMockWebService.Configurations.Interfaces;
-using SimpleMockWebService.Services.Interfaces;
+﻿using SimpleMockWebService.Services.Interfaces;
 using System.Net.Http;
 using System.Web.Http;
 
@@ -17,7 +16,7 @@ namespace SimpleMockWebService.Web.API.Controllers
         /// </summary>
         /// <param name="settings">Configuration settings instance.</param>
         /// <param name="service">Mock service instance.</param>
-        public ServiceController(ISimpleMockWebServiceSettings settings, IMockService service)
+        public ServiceController(IConfigurationSettings settings, IMockService service)
         {
             this._settings = settings;
             this._service = service;
@@ -27,7 +26,7 @@ namespace SimpleMockWebService.Web.API.Controllers
 
         #region Properties
 
-        private readonly ISimpleMockWebServiceSettings _settings;
+        private readonly IConfigurationSettings _settings;
         private readonly IMockService _service;
 
         #endregion Properties

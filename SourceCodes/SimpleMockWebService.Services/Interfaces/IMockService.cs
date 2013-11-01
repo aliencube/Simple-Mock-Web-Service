@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 
 namespace SimpleMockWebService.Services.Interfaces
 {
+    /// <summary>
+    /// This provides interfaces to the MockService class.
+    /// </summary>
     public interface IMockService : IDisposable
     {
         #region Properties

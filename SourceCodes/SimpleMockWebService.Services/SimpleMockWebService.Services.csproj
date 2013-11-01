@@ -56,6 +56,8 @@
     <Compile Include="..\..\Documents\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ConfigurationSettings.cs" />
+    <Compile Include="Interfaces\IConfigurationSettings.cs" />
     <Compile Include="Interfaces\IMockService.cs" />
     <Compile Include="MockService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

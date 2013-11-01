@@ -1,21 +1,19 @@
 using NUnit.Framework;
-using SimpleMockWebService.Configurations;
-using SimpleMockWebService.Configurations.Interfaces;
 using SimpleMockWebService.Services;
 using SimpleMockWebService.Services.Interfaces;
 using System;
-using System.Configuration;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Hosting;
+using ConfigurationSettings = SimpleMockWebService.Services.ConfigurationSettings;
 
 namespace SimpleMockWebService.Tests
 {
     [TestFixture]
     public class MockServiceTest
     {
-        private ISimpleMockWebServiceSettings _settings;
+        private IConfigurationSettings _settings;
         private IMockService _service;
         private HttpConfiguration _config;
         private Regex _regexSourcePath;
@@ -25,7 +23,7 @@ namespace SimpleMockWebService.Tests
         [TestFixtureSetUp]
         public void Init()
         {
-            this._settings = ConfigurationManager.GetSection("simpleMockWebService") as SimpleMockWebServiceSettings;
+            this._settings = new ConfigurationSettings();
             this._service = new MockService(this._settings);
             this._config = new HttpConfiguration();
             this._regexSourcePath = new Regex(@"^[A-Z]+:\\.+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);

@@ -1,16 +1,14 @@
 using NUnit.Framework;
-using SimpleMockWebService.Configurations;
-using SimpleMockWebService.Configurations.Interfaces;
 using SimpleMockWebService.Services;
 using SimpleMockWebService.Services.Interfaces;
 using SimpleMockWebService.Web.API.Controllers;
 using System;
-using System.Configuration;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
 using System.Web.Http.Routing;
+using ConfigurationSettings = SimpleMockWebService.Services.ConfigurationSettings;
 
 namespace SimpleMockWebService.Web.API.Tests
 {
@@ -20,7 +18,7 @@ namespace SimpleMockWebService.Web.API.Tests
     [TestFixture]
     public class ServiceControllerTest
     {
-        private ISimpleMockWebServiceSettings _settings;
+        private IConfigurationSettings _settings;
         private IMockService _service;
         private ServiceController _controller;
         private HttpConfiguration _config;
@@ -34,7 +32,7 @@ namespace SimpleMockWebService.Web.API.Tests
         [TestFixtureSetUp]
         public void Init()
         {
-            this._settings = ConfigurationManager.GetSection("simpleMockWebService") as SimpleMockWebServiceSettings;
+            this._settings = new ConfigurationSettings();
             this._service = new MockService(this._settings);
 
             this._config = new HttpConfiguration();

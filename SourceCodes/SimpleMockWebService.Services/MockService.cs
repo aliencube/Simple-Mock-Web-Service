@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SimpleMockWebService.Configurations;
-using SimpleMockWebService.Configurations.Interfaces;
 using SimpleMockWebService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -25,7 +24,7 @@ namespace SimpleMockWebService.Services
         /// Initialises a new instance of the MockService class.
         /// </summary>
         /// <param name="settings">Configuration settings instance.</param>
-        public MockService(ISimpleMockWebServiceSettings settings)
+        public MockService(IConfigurationSettings settings)
         {
             this._settings = settings;
         }
@@ -34,7 +33,7 @@ namespace SimpleMockWebService.Services
 
         #region Properties
 
-        private readonly ISimpleMockWebServiceSettings _settings;
+        private readonly IConfigurationSettings _settings;
 
         private Regex _regexPrefix;
 
@@ -78,6 +77,7 @@ namespace SimpleMockWebService.Services
                 return false;
 
             var validated = this._settings
+                                .SimpleMockWebServiceSettings
                                 .GlobalSettings
                                 .Verbs
                                 .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
@@ -97,7 +97,11 @@ namespace SimpleMockWebService.Services
                 return false;
 
             url = this.RegexPrefix.Replace(url, "$1").ToLower();
-            var validated = url.StartsWith(this._settings.GlobalSettings.WebApiPrefix.ToLower());
+            var validated = url.StartsWith(this._settings
+                                               .SimpleMockWebServiceSettings
+                                               .GlobalSettings
+                                               .WebApiPrefix
+                                               .ToLower());
             return validated;
         }
 
@@ -112,6 +116,7 @@ namespace SimpleMockWebService.Services
                 return false;
 
             var validated = this._settings
+                                .SimpleMockWebServiceSettings
                                 .GlobalSettings
                                 .JsonFileExtensions
                                 .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
@@ -129,6 +134,7 @@ namespace SimpleMockWebService.Services
         public ApiElement GetApiElement(string method, string url)
         {
             var api = this._settings
+                          .SimpleMockWebServiceSettings
                           .ApiGroups
                           .Cast<ApiGroupElement>()
                           .SelectMany(p => p.Apis.Cast<ApiElement>())
@@ -145,7 +151,11 @@ namespace SimpleMockWebService.Services
         public IList<string> GetApiUrlSegments(string url)
         {
             var segments = url.Replace("~/", "")
-                              .Replace(this._settings.GlobalSettings.WebApiPrefix + "/", "")
+                              .Replace(String.Format("{0}/",
+                                                     this._settings
+                                                         .SimpleMockWebServiceSettings
+                                                         .GlobalSettings
+                                                         .WebApiPrefix), "")
                               .Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
             return segments;
         }
