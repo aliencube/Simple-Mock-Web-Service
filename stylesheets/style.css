@@ -1,0 +1,15 @@
+﻿body {
+    padding-top: 70px;
+}
+
+.text-small {
+    font-size: 12px !important;
+}
+
+.text-medium {
+    font-size: 20px !important;
+}
+
+.text-large {
+    font-size: 30px !important;
+}
