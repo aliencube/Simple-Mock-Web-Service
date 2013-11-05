@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="markdownApp">
+<html>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
@@ -29,23 +29,9 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <nav class="navbar navbar-default navbar-fixed-top" style="padding-top: 10px;" role="navigation">
-                    <div class="navbar-header">
-                        <a class="navbar-brand text-large" href="/">Simple Mock Web Service</a>
-                    </div>
-
-                    <ul class="nav nav-pills pull-right">
-                        <li><a href="https://github.com/aliencube/Simple-Mock-Web-Service" class="btn btn-info">GitHub Source Repository</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="jumbotron">
+                    <h1>Simple Mock Web Service</h1>
+
                     <p class="lead">Provides RESTful web services, for mocking purpose, to be consumed in any JavaScript frameworks using AJAX call.</p>
                     
                     <div class="btn-group pull-right">
@@ -58,24 +44,75 @@
         </div>
         
         <div class="row">
-            <div id="readme-md" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-init="init()" ng-controller="markdownController">{{getHtml('https://github.com/aliencube/Simple-Mock-Web-Service/blob/master/README.md')}}</div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h1>Background</h1>
+                <p><strong>SimpleMock</strong> is originally inspired by <a href="https://github.com/CyberAgent/node-easymock">node EasyMock</a> managed by <a href="https://github.com/pboos">Patrick Boos</a>, which provides a web server, using <code>node.js</code>, for mocking web services. Instead of using <code>node.js</code>, <strong>SimpleMock</strong> does its features through ASP.NET Web API.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h1>System Requirements</h1>
+                <p>In order to run <strong>SimpleMock</strong>, it requires:</p>
+                <ul>
+                    <li>.NET Framework 4.5 or higher</li>
+                    <li>IIS 7.0 or higher</li>
+                    <li><a href="http://www.iis.net/downloads/microsoft/url-rewrite">URL Rewrite module</a></li>
+                </ul>
+                <p><em>NOTE</em>: <strong>SimpleMock</strong> can be run on IIS 6 with a 3rd party URL rewriting module like <a href="http://iirf.codeplex.com/">Ionics Isapi Rewrite Filter(IIRF)</a>, <a href="http://www.isapirewrite.com/">Helicon URL Rewrite</a> or <a href="http://www.urlrewriting.net/">UrlRewritingNet.UrlRewrite</a>, as long as .NET Framework 4.5 or higher is installed and run on the server machine.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h1>Getting Started</h1>
+                <p>Once your IIS has been setup with a URL of simplemock.local, for example, just simply run one of the following URLs:</p>
+                <pre>
+    GET     http://simplemock.local/api/contents
+    GET     http://simplemock.local/api/content/1 </pre>
+                <p>Then you will be able to see the JSON formatted response. Those requests are basically using the GET method. If you are using Fiddler or something like that, you can also run the following requests:</p>
+                <pre>
+    POST    http://simplemock.local/api/content
+    PUT     http://simplemock.local/api/content/1
+    DELETE  http://simplemock.local/api/content/1 </pre>
+                <p>Then you will be also able to confirm the JSON response within Fiddler.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h1><a href="https://github.com/aliencube/Simple-Mock-Web-Service/blob/master/README.md">Read More...</a></h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h1>License</h1>
+                <p><strong>SimpleMock</strong> is released under MIT License.</p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>The MIT License (MIT)</p>
+                        <p>Copyright (c) 2013 <a href="http://aliencube.org">aliencube.org</a></p>
+                        <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+                        <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+                        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="container">
         <div class="row">
             <footer class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
-                <p>This project is maintained by <a href="https://github.com/aliencube">aliencube</a></p>
+                <p>This project is maintained by <a href="https://github.com/aliencube">aliencube.org</a></p>
             </footer>
         </div>
     </div>
 
     <script src="javascripts/jquery-1.10.2.min.js"></script>
     <script src="javascripts/bootstrap/bootstrap.min.js"></script>
-    <script src="javascripts/angularjs/angular.js"></script>    <script src="javascripts/pagedown/Markdown.Converter.js"></script>
     <script src="javascripts/plugins.js"></script>
-    <script src="javascripts/services.js"></script>
-    <script src="javascripts/controllers.js"></script>
     <script src="javascripts/main.js"></script>
 </body>
 </html>
