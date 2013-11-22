@@ -5,11 +5,117 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="jumbotron">
             <h1>@Html.Raw(ViewBag.Title)</h1>
+            <p>Click the buttons below while opening your browser developer tool, and you will be able to see what will have happened.</p>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h1>Get List of Contents</h1>
+
+        <div class="row" ng-controller="demoController">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <pre>GET /api/contents</pre>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <input type="button" class="btn btn-primary pull-right" value="Submit" ng-click="getHtml('get', '/api/contents')" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <pre>{{json}}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h1>Get Content #1</h1>
+
+        <div class="row" ng-controller="demoController">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <pre>GET /api/contents</pre>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <input type="button" class="btn btn-primary pull-right" value="Submit" ng-click="getHtml('get', '/api/contents')" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <pre>{{json}}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h1>Post Content</h1>
+
+        <div class="row" ng-controller="demoController">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <pre>POST /api/content</pre>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <input type="button" class="btn btn-primary pull-right" value="Submit" ng-click="getHtml('post', '/api/content')" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <pre>{{json}}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h1>Put Content #1</h1>
+
+        <div class="row" ng-controller="demoController">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <pre>PUT /api/content/1</pre>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <input type="button" class="btn btn-primary pull-right" value="Submit" ng-click="getHtml('put', '/api/content/1')" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <pre>{{json}}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h1>Delete Content #1</h1>
+
+        <div class="row" ng-controller="demoController">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <pre>DELETE /api/content/1</pre>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        <input type="button" class="btn btn-primary pull-right" value="Submit" ng-click="getHtml('delete', '/api/content/1')" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <pre>{{json}}</pre>
+            </div>
+        </div>
     </div>
 </div>
