@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace SimpleMockWebService.Web.UI
+namespace SimpleMockWebService.Web.UI.App_Start
 {
     public class RouteConfig
     {
