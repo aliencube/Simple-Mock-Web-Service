@@ -6,31 +6,36 @@
             {
                 "title": "Get List of Contents",
                 "method": "get",
-                "url": "/api/contents"
+                "url": "/api/contents",
+                "result": "<- Click for result"
             },
             {
                 "title": "Get Content #1",
                 "method": "get",
-                "url": "/api/content/1"
+                "url": "/api/content/1",
+                "result": "<- Click for result"
             },
             {
                 "title": "Post Content",
                 "method": "post",
-                "url": "/api/content"
+                "url": "/api/content",
+                "result": "<- Click for result"
             },
             {
                 "title": "Put Content #1",
                 "method": "put",
-                "url": "/api/content/1"
+                "url": "/api/content/1",
+                "result": "<- Click for result"
             },
             {
                 "title": "Delete Content #1",
                 "method": "delete",
-                "url": "/api/content/1"
+                "url": "/api/content/1",
+                "result": "<- Click for result"
             }
         ];
 
-        $scope.getHtml = function (method, url) {
+        $scope.getJsonResult = function (index, method, url) {
             var config = {
                 "method": method,
                 "url": url
@@ -41,7 +46,7 @@
             }
             $http(config)
                 .success(function (data) {
-                    $scope.json = JSON.stringify(data, null, "    ");
+                    $scope.items[index].result = JSON.stringify(data, null, "    ");
                 });
         };
     });

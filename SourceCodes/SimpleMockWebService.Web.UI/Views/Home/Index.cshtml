@@ -22,12 +22,12 @@
                             <pre>{{item.method | uppercase}} {{item.url}}</pre>
                         </div>
                         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                            <input type="button" class="btn btn-primary pull-right" value="Submit" ng-click="getHtml('{{item.method}}', '{{item.url}}')" />
+                            <input type="button" class="btn btn-primary pull-right" value="Submit" ng-click="getJsonResult($index, item.method, item.url)" />
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                    <pre>{{json}}</pre>
+                    <pre>{{item.result}}</pre>
                 </div>
             </div>
         </div>
