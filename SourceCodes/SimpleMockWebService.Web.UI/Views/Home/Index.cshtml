@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div ng-controller="demoController">
+<div ng-init="demoService" ng-controller="demoController">
     <div class="row" ng-repeat="item in items">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <h1>{{item.title}}</h1>
