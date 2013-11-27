@@ -195,6 +195,12 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PostBuildEvent>
+if not exist "$(SolutionDir)..\Libraries\$(ProjectName)" (
+    md "$(SolutionDir)..\Libraries\$(ProjectName)"
+)
+
+xcopy "$(TargetDir)*.*" "$(SolutionDir)..\Libraries\$(ProjectName)" /e /y
+
 move /y "$(TargetDir)*.config" "$(ProjectDir)"
 </PostBuildEvent>
   </PropertyGroup>
