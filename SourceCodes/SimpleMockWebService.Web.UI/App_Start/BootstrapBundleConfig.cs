@@ -1,8 +1,8 @@
 using System.Web.Optimization;
 
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(SimpleMockWebService.Web.UI.App_Start.BootstrapBundleConfig), "RegisterBundles")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(SimpleMockWebService.Web.UI.BootstrapBundleConfig), "RegisterBundles")]
 
-namespace SimpleMockWebService.Web.UI.App_Start
+namespace SimpleMockWebService.Web.UI
 {
     public class BootstrapBundleConfig
     {
