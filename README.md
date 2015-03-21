@@ -37,7 +37,7 @@ Then you will be also able to confirm the JSON response within Fiddler.
 
 # Configuration #
 
-If you want to add your custom RESful URLs, you can simply modify the `SimpleMockWebService.config` file.
+If you want to add your custom RESTful URLs, you can simply modify the `SimpleMockWebService.config` file.
 
     <?xml version="1.0" encoding="utf-8" ?>
     <simpleMockWebService>
