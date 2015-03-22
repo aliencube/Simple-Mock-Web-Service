@@ -17,5 +17,12 @@ namespace SimpleMockWebService.IoC.App_Start
 
             GlobalConfiguration.Configuration.DependencyResolver = resolver;
         }
+
+        /// <summary>Integrates Unity when the application starts on SelfHost environment.</summary>
+        public static void StartWithDependencyResolver(HttpConfiguration config)
+        {
+            var resolver = new UnityDependencyResolver(UnityConfig.GetConfiguredContainer());
+            config.DependencyResolver = resolver;
+        }
     }
 }
