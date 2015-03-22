@@ -296,7 +296,18 @@ namespace SimpleMockWebService.Services
             if (!this.IsValidMethod(method))
                 return request.CreateResponse(HttpStatusCode.MethodNotAllowed);
 
-            var url = request.GetQueryNameValuePairs().ToDictionary(p => p.Key, p => p.Value)["url"];
+            var query = request.GetQueryNameValuePairs();
+            string url;
+
+            if (query.Any())
+            {
+                url = query.ToDictionary(p => p.Key, p => p.Value)["url"];
+            }
+            else
+            {
+                url = request.RequestUri.PathAndQuery;
+            }
+
             if (!this.IsValidPrefix(url))
                 return request.CreateResponse(HttpStatusCode.NotFound);
 
