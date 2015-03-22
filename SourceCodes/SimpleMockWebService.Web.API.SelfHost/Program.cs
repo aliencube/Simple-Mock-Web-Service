@@ -4,6 +4,7 @@ using System.Web.Http;
 using System.Web.Http.SelfHost;
 using SimpleMockWebService.Web.API;
 using SimpleMockWebService.IoC.App_Start;
+using System.Security.Principal;
 
 namespace SimpleMockWebService.Web.API.SelfHost
 {
@@ -11,6 +12,17 @@ namespace SimpleMockWebService.Web.API.SelfHost
     {
         static void Main(string[] args)
         {
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            bool isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+
+            if (!isAdmin)
+            {
+                Console.WriteLine("Please run as administrator.");
+                Console.ReadLine();
+                return;
+            }
+
             var url = "http://localhost:8080";
             var config = new HttpSelfHostConfiguration(url);
 
