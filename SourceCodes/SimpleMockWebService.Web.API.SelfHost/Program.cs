@@ -35,7 +35,7 @@ namespace SimpleMockWebService.Web.API.SelfHost
             using (HttpSelfHostServer server = new HttpSelfHostServer(config))
             {
                 server.OpenAsync().Wait();
-                Console.WriteLine("SimpleMockWebService is On... {0}", url);
+                Console.WriteLine("SimpleMockWebService is UP... {0}", url);
                 Console.WriteLine("Press Enter to quit.");
                 Console.ReadLine();
             }
