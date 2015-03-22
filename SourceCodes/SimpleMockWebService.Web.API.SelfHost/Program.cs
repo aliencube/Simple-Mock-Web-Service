@@ -12,11 +12,7 @@ namespace SimpleMockWebService.Web.API.SelfHost
     {
         static void Main(string[] args)
         {
-            WindowsIdentity identity = WindowsIdentity.GetCurrent();
-            WindowsPrincipal principal = new WindowsPrincipal(identity);
-            bool isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
-
-            if (!isAdmin)
+            if (!IsAdmin())
             {
                 Console.WriteLine("Please run as administrator.");
                 Console.ReadLine();
@@ -39,6 +35,14 @@ namespace SimpleMockWebService.Web.API.SelfHost
                 Console.WriteLine("Press Enter to quit.");
                 Console.ReadLine();
             }
+        }
+
+        static bool IsAdmin()
+        {
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            bool isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            return isAdmin;
         }
     }
 }
