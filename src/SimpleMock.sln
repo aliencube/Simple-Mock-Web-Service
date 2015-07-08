@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00_Docs", "00_Docs", "{E176A019-7026-47EB-B4AC-71A0AAC8BF60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_Configs", "01_Configs", "{3B98D4B9-A4FD-45F9-B016-D48D3BE5AA84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_Apps", "02_Apps", "{F2096A5B-4227-46D4-9B93-EE9FE6FCD8B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03_Services", "03_Services", "{ABDD76BA-470F-4746-B5A5-A40A2FB5F16E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04_Models", "04_Models", "{B3D2A0C7-FF8E-44F0-AD3C-A222903A2E08}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "99_Tests", "99_Tests", "{741D8053-5EA3-4716-A7BC-CE7C4E8E8773}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMock.Configs", "01_Configs\SimpleMock.Configs\SimpleMock.Configs.csproj", "{DA5B66D7-6A4F-4AC2-9DA3-8716AD32A71E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Properties", "Properties", "{2BBEFDF4-F225-42C1-B3B8-291C1B1324AE}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\Properties\SharedAssemblyInfo.cs = ..\docs\Properties\SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMock.Configs.Tests", "99_Tests\SimpleMock.Configs.Tests\SimpleMock.Configs.Tests.csproj", "{1CEA9996-5749-4D88-B2BE-CDCF01770FF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{66B05E7C-9FFE-499A-B6CB-435309F7DE44}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMock.Services", "03_Services\SimpleMock.Services\SimpleMock.Services.csproj", "{E49E5299-DE0A-4B5A-8864-E9C42FDA40DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMock.Services.Tests", "99_Tests\SimpleMock.Services.Tests\SimpleMock.Services.Tests.csproj", "{0F2FD644-F4BA-42D7-B4DC-A4EE3D20BDE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMock.WebApi", "02_Apps\SimpleMock.WebApi\SimpleMock.WebApi.csproj", "{716042DA-AF71-401C-8202-BE5A97E5E67E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA5B66D7-6A4F-4AC2-9DA3-8716AD32A71E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA5B66D7-6A4F-4AC2-9DA3-8716AD32A71E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA5B66D7-6A4F-4AC2-9DA3-8716AD32A71E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA5B66D7-6A4F-4AC2-9DA3-8716AD32A71E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CEA9996-5749-4D88-B2BE-CDCF01770FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CEA9996-5749-4D88-B2BE-CDCF01770FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CEA9996-5749-4D88-B2BE-CDCF01770FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CEA9996-5749-4D88-B2BE-CDCF01770FF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E49E5299-DE0A-4B5A-8864-E9C42FDA40DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E49E5299-DE0A-4B5A-8864-E9C42FDA40DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E49E5299-DE0A-4B5A-8864-E9C42FDA40DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E49E5299-DE0A-4B5A-8864-E9C42FDA40DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F2FD644-F4BA-42D7-B4DC-A4EE3D20BDE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F2FD644-F4BA-42D7-B4DC-A4EE3D20BDE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F2FD644-F4BA-42D7-B4DC-A4EE3D20BDE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F2FD644-F4BA-42D7-B4DC-A4EE3D20BDE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{716042DA-AF71-401C-8202-BE5A97E5E67E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{716042DA-AF71-401C-8202-BE5A97E5E67E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{716042DA-AF71-401C-8202-BE5A97E5E67E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{716042DA-AF71-401C-8202-BE5A97E5E67E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DA5B66D7-6A4F-4AC2-9DA3-8716AD32A71E} = {3B98D4B9-A4FD-45F9-B016-D48D3BE5AA84}
+		{2BBEFDF4-F225-42C1-B3B8-291C1B1324AE} = {E176A019-7026-47EB-B4AC-71A0AAC8BF60}
+		{1CEA9996-5749-4D88-B2BE-CDCF01770FF7} = {741D8053-5EA3-4716-A7BC-CE7C4E8E8773}
+		{E49E5299-DE0A-4B5A-8864-E9C42FDA40DA} = {ABDD76BA-470F-4746-B5A5-A40A2FB5F16E}
+		{0F2FD644-F4BA-42D7-B4DC-A4EE3D20BDE7} = {741D8053-5EA3-4716-A7BC-CE7C4E8E8773}
+		{716042DA-AF71-401C-8202-BE5A97E5E67E} = {F2096A5B-4227-46D4-9B93-EE9FE6FCD8B4}
+	EndGlobalSection
+EndGlobal
